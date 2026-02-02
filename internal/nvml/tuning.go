@@ -3,7 +3,8 @@ package nvml
 import (
 	"errors"
 	"fmt"
-	"gpuctl/internal/gpu"
+
+	"github.com/zhhc99/gpuctl/internal/gpu"
 )
 
 func (g *Device) PowerLimitRange() (int, int, error) {

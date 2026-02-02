@@ -2,8 +2,9 @@ package nvml
 
 import (
 	"fmt"
-	"gpuctl/internal/gpu"
 	"unsafe"
+
+	"github.com/zhhc99/gpuctl/internal/gpu"
 )
 
 func (g *Device) Utilization() (int, int, error) {

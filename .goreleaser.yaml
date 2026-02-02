@@ -4,7 +4,7 @@ project_name: gpuctl
 builds:
   - env: [ "CGO_ENABLED=0" ]
     ldflags:
-      - -s -w -X 'gpuctl/cmd.Version={{.Version}}' # 
+      - -s -w -X 'github.com/zhhc99/gpuctl/cmd.Version={{.Version}}'
     goos: [ linux, windows ]
     goarch: [ amd64, arm64 ]
     binary: gpuctl

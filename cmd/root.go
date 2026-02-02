@@ -3,8 +3,8 @@ package cmd
 import (
 	"fmt"
 
-	"gpuctl/internal/gpu"
-	"gpuctl/internal/nvml"
+	"github.com/zhhc99/gpuctl/internal/gpu"
+	"github.com/zhhc99/gpuctl/internal/nvml"
 
 	"github.com/spf13/cobra"
 )

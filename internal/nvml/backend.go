@@ -2,8 +2,9 @@ package nvml
 
 import (
 	"fmt"
-	"gpuctl/internal/gpu"
 	"strings"
+
+	"github.com/zhhc99/gpuctl/internal/gpu"
 )
 
 var _ gpu.Backend = (*Backend)(nil)

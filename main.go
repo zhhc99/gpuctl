@@ -1,8 +1,9 @@
 package main
 
 import (
-	"gpuctl/cmd"
 	"os"
+
+	"github.com/zhhc99/gpuctl/cmd"
 )
 
 func main() {

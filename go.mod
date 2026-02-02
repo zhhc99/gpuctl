@@ -1,4 +1,4 @@
-module gpuctl
+module github.com/zhhc99/gpuctl
 
 go 1.25.5
 

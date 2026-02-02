@@ -2,12 +2,13 @@ package cmd
 
 import (
 	"fmt"
-	"gpuctl/internal/sysutils"
 	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
+
+	"github.com/zhhc99/gpuctl/internal/sysutils"
 
 	"github.com/spf13/cobra"
 )

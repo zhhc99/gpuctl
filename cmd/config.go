@@ -2,11 +2,12 @@ package cmd
 
 import (
 	"fmt"
-	"gpuctl/internal/config"
-	"gpuctl/internal/sysutils"
 	"os"
 	"os/exec"
 	"runtime"
+
+	"github.com/zhhc99/gpuctl/internal/config"
+	"github.com/zhhc99/gpuctl/internal/sysutils"
 
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v3"

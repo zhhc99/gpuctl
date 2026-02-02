@@ -3,8 +3,9 @@ package nvml
 import (
 	"bytes"
 	"fmt"
-	"gpuctl/internal/libloader"
 	"unsafe"
+
+	"github.com/zhhc99/gpuctl/internal/libloader"
 )
 
 var (

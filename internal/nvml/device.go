@@ -3,8 +3,9 @@ package nvml
 import (
 	"errors"
 	"fmt"
-	"gpuctl/internal/gpu"
 	"strings"
+
+	"github.com/zhhc99/gpuctl/internal/gpu"
 )
 
 var _ gpu.Device = (*Device)(nil)

@@ -2,9 +2,10 @@ package cmd
 
 import (
 	"fmt"
-	"gpuctl/internal/gpu"
 	"os"
 	"text/tabwriter"
+
+	"github.com/zhhc99/gpuctl/internal/gpu"
 
 	"github.com/spf13/cobra"
 )

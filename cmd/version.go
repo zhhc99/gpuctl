@@ -2,7 +2,8 @@ package cmd
 
 import (
 	"fmt"
-	"gpuctl/internal/gpu"
+
+	"github.com/zhhc99/gpuctl/internal/gpu"
 
 	"github.com/spf13/cobra"
 )
@@ -13,7 +14,7 @@ var versionCmd = &cobra.Command{
 	Use:   "version",
 	Short: "Print version information",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("gpuctl version: %Ts\n", Version)
+		fmt.Printf("gpuctl version: %s\n", Version)
 		if Backend != nil {
 			var info gpu.BackendInfo
 			info.Capture(Backend)

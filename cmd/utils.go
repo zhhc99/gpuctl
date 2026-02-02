@@ -2,9 +2,10 @@ package cmd
 
 import (
 	"fmt"
-	"gpuctl/internal/gpu"
 	"strconv"
 	"strings"
+
+	"github.com/zhhc99/gpuctl/internal/gpu"
 )
 
 // resolveDevices 按 -d flags 筛选设备.
