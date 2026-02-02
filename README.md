@@ -1,5 +1,12 @@
 # gpuctl
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Platform: Windows | Linux](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-blue)](https://github.com/zhhc99/gpuctl)
+[![Go Version](https://img.shields.io/github/go-mod/go-version/zhhc99/gpuctl)](https://github.com/zhhc99/gpuctl)
+[![Latest Release](https://img.shields.io/github/v/release/zhhc99/gpuctl)](https://github.com/zhhc99/gpuctl/releases)
+
+![gpuctl image](./docs/images/demo.png)
+
 **GPU 状态管理和监控工具.**
 
 ## 🛠 功能
