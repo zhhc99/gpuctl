@@ -24,12 +24,10 @@
 
 ## 🚀 快速安装
 
-**通过安装脚本:**
-
 - Linux
 
   ```bash
-  curl -sSL https://raw.githubusercontent.com/zhhc99/gpuctl/main/install.sh | bash
+  curl -sSL https://raw.githubusercontent.com/zhhc99/gpuctl/main/install.sh | sudo bash
   ```
 
 - Windows
@@ -38,19 +36,19 @@
   powershell -ExecutionPolicy ByPass -Command "iwr -useb https://raw.githubusercontent.com/zhhc99/gpuctl/main/install.ps1 | iex"
   ```
 
-**通过 go:**
+- 也可以用 `go install`:
 
-```bash
-# 💡 gpuctl service install 会自动向 /usr/local/bin/ 拷贝自身, 以避免服务权限问题.
-go install github.com/zhhc99/gpuctl@latest
-```
+  ```bash
+  # 💡 gpuctl service install 会自动向 /usr/local/bin/ 拷贝自身, 以避免服务权限问题.
+  go install github.com/zhhc99/gpuctl@latest
+  ```
 
 **卸载:**
 
 - Linux
 
-  ```
-  curl -sSL https://raw.githubusercontent.com/zhhc99/gpuctl/main/uninstall.sh | bash
+  ```bash
+  curl -sSL https://raw.githubusercontent.com/zhhc99/gpuctl/main/uninstall.sh | sudo bash
   ```
 
 - Windows

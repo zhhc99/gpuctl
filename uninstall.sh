@@ -2,6 +2,7 @@
 #
 # 卸载 gpuctl 及服务
 
+{
 set -euo pipefail
 
 main() {
@@ -47,3 +48,4 @@ main() {
 }
 
 main "$@"
+}
