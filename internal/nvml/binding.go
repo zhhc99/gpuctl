@@ -42,13 +42,13 @@ type NvmlLib struct {
 	DeviceGetSamples                   func(device DeviceHandle, samplingType SamplingType, lastSeen uint64, valType *ValueType, count *uint32, samples *Sample) Return
 	DeviceGetCurrentClocksEventReasons func(device DeviceHandle, reasons *uint64) Return
 
-	// oc: power limits
+	// power limits
 	DeviceGetPowerManagementLimitConstraints func(device DeviceHandle, min *uint32, max *uint32) Return
 	DeviceGetPowerManagementDefaultLimit     func(device DeviceHandle, limit *uint32) Return
 	DeviceGetPowerManagementLimit            func(device DeviceHandle, limit *uint32) Return
 	DeviceSetPowerManagementLimit            func(device DeviceHandle, limit uint32) Return
 
-	// oc: clock offsets
+	// clock offsets
 	DeviceGetClockOffsets         func(device DeviceHandle, info *ClockOffset) Return
 	DeviceGetGpcClkVfOffset       func(device DeviceHandle, offset *int32) Return          // GetClockOffsetsLegacy
 	DeviceGetGpcClkMinMaxVfOffset func(device DeviceHandle, min *int32, max *int32) Return // GetClockOffsetsLegacy
@@ -59,7 +59,7 @@ type NvmlLib struct {
 	DeviceSetGpcClkVfOffset       func(device DeviceHandle, offset int32) Return // SetClockOffsetsLegacy
 	DeviceSetMemClkVfOffset       func(device DeviceHandle, offset int32) Return
 
-	// oc: locked clocks
+	// locked clocks
 	DeviceGetSupportedMemoryClocks   func(device DeviceHandle, count *uint32, clocksMHz *uint32) Return
 	DeviceGetSupportedGraphicsClocks func(device DeviceHandle, memoryClockMHz uint32, count *uint32, clocksMHz *uint32) Return
 	DeviceSetGpuLockedClocks         func(device DeviceHandle, min uint32, max uint32) Return

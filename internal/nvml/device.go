@@ -103,8 +103,8 @@ func (g *Device) getSupportedGpuClocks(memClockMHz int) ([]int, error) {
 	return res, nil
 }
 
-func (g *Device) getClLimGpuV1() (int, int, error) {
-	// a faster way, which ignores min cl lim
+func (g *Device) getClockLimitGPURangeV1() (int, int, error) {
+	// 将 min 视作 0 会更简洁, 但这不对
 
 	var max uint32
 	if ret := g.lib.DeviceGetMaxClockInfo(g.handle, CLOCK_GRAPHICS, &max); ret != SUCCESS {
@@ -117,7 +117,7 @@ func (g *Device) getClLimGpuV1() (int, int, error) {
 	return 0, int(max) - co, nil
 }
 
-func (g *Device) getClLimGpuV2() (int, int, error) {
+func (g *Device) getClockLimitGPURangeV2() (int, int, error) {
 	// see also: nvidia-smi -q -d SUPPORTED_CLOCKS
 
 	memClocks, err := g.getSupportedMemClocks()

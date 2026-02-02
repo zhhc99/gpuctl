@@ -67,7 +67,7 @@ func (g *Device) FanSpeed() (int, int, error) {
 		return gpu.Unavailable, gpu.Unavailable, fmt.Errorf(g.lib.StringFromReturn(ret))
 	}
 
-	// error only if fan speed percent is not available
+	// 只在无法获取 FanSpeed 百分比时报错
 	if g.lib.DeviceGetFanSpeedRPM != nil {
 		var fan FanSpeedInfo
 		fan.Version = VERSION_FAN_SPEED

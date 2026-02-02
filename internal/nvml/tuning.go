@@ -55,14 +55,13 @@ func (g *Device) ClockOffsetMemRange() (int, int, error) {
 }
 
 func (g *Device) ClockLimitGPURange() (int, int, error) {
-	return g.getClLimGpuV2()
+	return g.getClockLimitGPURangeV2()
 }
 
 func (g *Device) IsPowerLimitSetterSupported() bool {
 	var limit uint32
 
-	// pl are controlled by vbios/hardware on some laptop GPUs (and getter always fails)
-	// setter still succeeds but does nothing
+	// 部分 laptop GPUs 自行控制功耗墙: getter 总是失败, setter 成功但无效
 	return g.lib.DeviceGetPowerManagementLimit != nil &&
 		g.lib.DeviceSetPowerManagementLimit != nil &&
 		g.lib.DeviceGetPowerManagementLimit(g.handle, &limit) == SUCCESS

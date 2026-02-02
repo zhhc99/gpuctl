@@ -17,6 +17,7 @@ type Snapshot struct {
 	Temperature    int // Celsius
 	FanPct         int
 	FanRPM         int
+
 	PowerLimit     int // Watt
 	ClockOffsetGPU int // MHz
 	ClockOffsetMem int // MHz

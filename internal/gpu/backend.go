@@ -1,8 +1,8 @@
 package gpu
 
 type Backend interface {
-	Name() string    // e.g. "NVML", "OneAPI"
-	Version() string // version of manager
+	Name() string    // "NVML"/"OneAPI"/...
+	Version() string // version of NVML/OneAPI/...
 	DriverVersion() string
 
 	Init() error
