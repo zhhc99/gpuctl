@@ -1,0 +1,28 @@
+version: 2
+project_name: gpuctl
+
+builds:
+  - env: [ "CGO_ENABLED=0" ]
+    ldflags:
+      - -s -w -X 'gpuctl/cmd.Version={{.Version}}' # 
+    goos: [ linux, windows ]
+    goarch: [ amd64, arm64 ]
+    binary: gpuctl
+
+archives:
+  - formats: [ tar.gz ]
+    format_overrides:
+      - goos: windows
+        formats: [ zip ]
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+
+checksum:
+  name_template: 'checksums.txt'
+
+changelog:
+  disable: true
