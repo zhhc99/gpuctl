@@ -20,7 +20,7 @@ $url = "https://github.com/$repo/releases/latest/download/gpuctl_$platform.zip"
 
 
 # download and install
-$dir  = "$Home\.gpuctl"
+$dir  = "$env:LOCALAPPDATA\Programs\gpuctl"
 $tmp  = "$env:TEMP\gpuctl_tmp"
 
 Write-Host "🚀 Downloading gpuctl for Windows_$arch..." -F Cyan
