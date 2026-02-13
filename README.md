@@ -89,6 +89,8 @@ gpuctl config edit
 
 更多用法见 `gpuctl --help`.
 
+> Windows 下不太容易在同一个终端提权. 考虑给 Windows Terminal 添加一个新配置文件, 并启用 "以管理员身份运行此配置文件", 之后可以在这个终端执行 `gpuctl`.
+
 ## 🔨 编译源代码
 
 这是一个纯 go 项目, 编译非常简单.
