@@ -46,4 +46,4 @@ if ($user_path -split ';' -notcontains $dir) {
     $env:Path += ";$dir"
 }
 
-Write-Host "🎉 Done. Try run 'gpuctl'!" -F Green
+Write-Host "🎉 Done. Try restart terminal and run 'gpuctl'!" -F Green

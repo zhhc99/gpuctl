@@ -91,6 +91,12 @@ gpuctl config edit
 
 > Windows 下不太容易在同一个终端提权. 考虑给 Windows Terminal 添加一个新配置文件, 并启用 "以管理员身份运行此配置文件", 之后可以在这个终端执行 `gpuctl`.
 
+## 🤔 常见问题
+
+**Windows 下** `gpuctl service status` **显示乱码怎么办?**
+
+这是 Windows 地区编码的遗留问题. 如果能看到乱码, 一般说明服务正常运行.
+
 ## 🔨 编译源代码
 
 这是一个纯 go 项目, 编译非常简单.
