@@ -3,6 +3,7 @@
     Installs gpuctl to $HOME\.gpuctl
 #>
 $ErrorActionPreference = "Stop"
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 # github forces TLS 1.2
 
 # os & arch check
 # os check fails on PS 5.1; skip it
@@ -24,7 +25,7 @@ $dir  = "$env:LOCALAPPDATA\Programs\gpuctl"
 $tmp  = "$env:TEMP\gpuctl_tmp"
 
 Write-Host "🚀 Downloading gpuctl for Windows_$arch..." -F Cyan
-if (Test-Path $tmp) { rm -rf $tmp }
+if (Test-Path $tmp) { Remove-Item $tmp -Recurse -Force }
 mkdir $tmp, $dir -Force | Out-Null
 
 try {
@@ -35,7 +36,7 @@ try {
 } catch {
     Write-Host "❗ Error: failed to download. something must be wrong... 🤔" -F Red; exit 1
 } finally {
-    rm -rf $tmp
+    Remove-Item $tmp -Recurse -Force
 }
 
 # add to path
