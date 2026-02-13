@@ -21,10 +21,10 @@
 支持的 GPU:
 
 - [x] NVIDIA (NVML)
-- [ ] Intel (Level Zero)
+- [ ] Intel (Level Zero).
 - [ ] 不会有 AMD, 直到有跨平台的 API (to AMD: Intel 比你们起步晚, 但 API 仍然跨平台)
 
-## 🚀 快速安装
+## 📦 快速安装
 
 - Linux
 
@@ -41,7 +41,7 @@
 - 也可以用 `go install`:
 
   ```bash
-  # 💡 gpuctl service install 会自动向 /usr/local/bin/ 拷贝自身, 以避免服务权限问题.
+  # 💡 gpuctl service install 在 Linux 下会自动向 /usr/local/bin/ 拷贝自身, 以避免服务权限问题.
   go install github.com/zhhc99/gpuctl@latest
   ```
 
@@ -89,13 +89,18 @@ gpuctl config edit
 
 更多用法见 `gpuctl --help`.
 
-> Windows 下不太容易在同一个终端提权. 考虑给 Windows Terminal 添加一个新配置文件, 并启用 "以管理员身份运行此配置文件", 之后可以在这个终端执行 `gpuctl`.
-
 ## 🤔 常见问题
 
-**Windows 下** `gpuctl service status` **显示乱码怎么办?**
+**Q: 提示 `Permission Denied` 或 `Insufficient Permissions` 等怎么办?**
 
-这是 Windows 地区编码的遗留问题. 如果能看到乱码, 一般说明服务正常运行.
+A: `tune` 和 `service` 的一些命令需要提权:
+
+- **Linux**: 使用 `sudo` 执行即可.
+- **Windows**: 不太容易在同一个终端提权, 用 `sudo` 的话当前终端可能看不到输出. 考虑给 Windows Terminal 添加一个新配置文件, 并启用 "以管理员身份运行此配置文件", 之后可以在这个提权终端执行 `gpuctl`.
+
+**Q: Windows 下 `gpuctl service status` 显示乱码怎么办?**
+
+A: 这是 Windows 地区编码的遗留问题. 如果能看到乱码, 一般说明服务正常运行.
 
 ## 🔨 编译源代码
 
@@ -110,3 +115,14 @@ go build -o gpuctl .
 ```bash
 go build -ldflags "-X 'gpuctl/cmd.Version=v1.0.0'"
 ```
+
+## 🚀 发布
+
+提交代码后, 推送 tag 触发 goreleaser:
+
+```bash
+git tag vX.Y.Z
+git push origin vX.Y.Z
+```
+
+GitHub Actions 会自动编译打包二进制然后发布. 可以手动填写该发布的 Release Notes.
