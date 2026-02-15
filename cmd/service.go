@@ -44,17 +44,19 @@ var serviceInstallCmd = &cobra.Command{
 		userName := user.Username
 
 		if runtime.GOOS == "windows" {
+			userName = os.Getenv("USERNAME")
 			taskName := fmt.Sprintf("%s@%s", ServiceName, userName)
-			cmdStr := fmt.Sprintf("\"%s\" config apply", exe)
+			cmdStr := fmt.Sprintf("\"\\\"%s\\\" config apply\"", exe)
 
 			schArgs := []string{
 				"/create",
 				"/tn", taskName,
 				"/tr", cmdStr,
 				"/sc", "ONLOGON",
-				"/ru", "INTERACTIVE",
+				"/ru", userName,
 				"/rl", "HIGHEST",
 				"/f",
+				"/it",
 			}
 
 			if out, err := exec.Command("schtasks", schArgs...).CombinedOutput(); err != nil {
@@ -126,6 +128,7 @@ var serviceUninstallCmd = &cobra.Command{
 		userName := user.Username
 
 		if runtime.GOOS == "windows" {
+			userName = os.Getenv("USERNAME")
 			taskName := fmt.Sprintf("%s@%s", ServiceName, userName)
 			if out, err := exec.Command("schtasks", "/delete", "/tn", taskName, "/f").CombinedOutput(); err != nil {
 				return fmt.Errorf("failed to delete task: %s\nOutput: %s", err, string(out))
