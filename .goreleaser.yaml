@@ -3,6 +3,8 @@ project_name: gpuctl
 
 builds:
   - env: [ "CGO_ENABLED=0" ]
+    flags:
+      - -tags=nofakecgo
     ldflags:
       - -s -w -X 'github.com/zhhc99/gpuctl/cmd.Version={{.Version}}'
     goos: [ linux, windows ]
