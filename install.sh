@@ -21,8 +21,9 @@ trap cleanup EXIT
 
 main() {
   if [[ $EUID -ne 0 ]]; then
-    echo "🛡️  Need sudo powers to install..."
-    exec sudo bash "$0" "$@"
+    echo "🛡️ Need sudo powers to install..."
+	echo "⚠️ Please retry and run with sudo."
+	exit 1
   fi
 
   # os & arch check
