@@ -15,7 +15,7 @@ type Device struct {
 	lib    *NvmlLib
 	index  int
 	name   string
-	uuid   string
+	busID  string
 }
 
 func newDevice(handle DeviceHandle, lib *NvmlLib) *Device {
@@ -23,14 +23,16 @@ func newDevice(handle DeviceHandle, lib *NvmlLib) *Device {
 
 	g.fetchIndex()
 	g.fetchName()
-	g.fetchUUID()
+	g.fetchPCIBusID()
 
 	return g
 }
 
 func (g *Device) Index() int   { return g.index }
 func (g *Device) Name() string { return g.name }
-func (g *Device) UUID() string { return g.uuid }
+func (g *Device) PCIBusID() string {
+	return g.busID
+}
 
 func (g *Device) fetchIndex() {
 	var index uint32
@@ -48,12 +50,14 @@ func (g *Device) fetchName() {
 	g.name = strings.TrimRight(string(buf[:]), "\x00")
 }
 
-func (g *Device) fetchUUID() {
-	var buf [DEVICE_UUID_BUFFER_SIZE]byte
-	if ret := g.lib.DeviceGetUUID(g.handle, &buf[0], DEVICE_UUID_BUFFER_SIZE); ret != SUCCESS {
-		g.uuid = "Unknown UUID"
+func (g *Device) fetchPCIBusID() {
+	var pci PciInfo
+	if ret := g.lib.DeviceGetPciInfo_v3(g.handle, &pci); ret != SUCCESS {
+		g.busID = "unknown BusID"
+	} else {
+		rawID := strings.TrimRight(string(pci.BusId[:]), "\x00")
+		g.busID = rawID[len(rawID)-12:] // to BDF format
 	}
-	g.uuid = strings.TrimRight(string(buf[:]), "\x00")
 }
 
 func (g *Device) getSupportedMemClocks() ([]int, error) {

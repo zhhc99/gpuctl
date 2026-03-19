@@ -19,6 +19,15 @@ type Temperature struct {
 	SensorType  TemperatureSensors
 	Temperature uint32
 }
+type PciInfo struct {
+	BusIdLegacy    [16]byte
+	Domain         uint32
+	Bus            uint32
+	Device         uint32
+	PciDeviceId    uint32
+	PciSubSystemId uint32
+	BusId          [32]byte
+}
 type Utilization struct{ Gpu, Memory uint32 }
 type Memory struct{ Total, Free, Used uint64 }
 
@@ -77,7 +86,6 @@ const (
 const (
 	SYSTEM_DRIVER_VERSION_BUFFER_SIZE = 80
 	SYSTEM_NVML_VERSION_BUFFER_SIZE   = 80
-	DEVICE_UUID_BUFFER_SIZE           = 80
 	DEVICE_NAME_BUFFER_SIZE           = 64
 )
 const (

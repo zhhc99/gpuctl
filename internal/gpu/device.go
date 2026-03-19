@@ -3,7 +3,7 @@ package gpu
 type Device interface {
 	Index() int
 	Name() string
-	UUID() string
+	PCIBusID() string
 
 	Utilization() (gpu, mem int, err error)
 	Clocks() (gpu, mem int, err error)
@@ -26,10 +26,12 @@ type Device interface {
 	SetClockOffsetGPU(mhz int) error
 	SetClockOffsetMem(mhz int) error
 	SetClockLimitGPU(mhz int) error
+	SetFanSpeed(percent int) error
 	ResetPowerLimit() error
 	ResetClockOffsetGPU() error
 	ResetClockOffsetMem() error
 	ResetClockLimitGPU() error
+	ResetFanSpeed() error
 
 	IsPowerLimitSetterSupported() bool
 }

@@ -68,6 +68,26 @@ func (g *Device) IsPowerLimitSetterSupported() bool {
 		g.lib.DeviceGetPowerManagementLimit(g.handle, &limit) == SUCCESS
 }
 
+func (g *Device) SetFanSpeed(percent int) error {
+	if g.lib.DeviceGetNumFans == nil || g.lib.DeviceSetFanSpeed_v2 == nil {
+		return errors.New("fan control not supported by this driver version")
+	}
+	var count uint32
+	if ret := g.lib.DeviceGetNumFans(g.handle, &count); ret != SUCCESS {
+		return fmt.Errorf(g.lib.StringFromReturn(ret))
+	}
+	if count == 0 {
+		return errors.New("no fans detected")
+	}
+	speed := uint32(percent)
+	for i := uint32(0); i < count; i++ {
+		if ret := g.lib.DeviceSetFanSpeed_v2(g.handle, i, speed); ret != SUCCESS {
+			return fmt.Errorf("fan %d: %s", i, g.lib.StringFromReturn(ret))
+		}
+	}
+	return nil
+}
+
 func (g *Device) SetPowerLimit(watt int) error {
 	if !g.IsPowerLimitSetterSupported() {
 		return errors.New("controlled by vbios/hardware")
@@ -121,6 +141,25 @@ func (g *Device) SetClockOffsetMem(mhz int) error {
 func (g *Device) SetClockLimitGPU(mhz int) error {
 	if ret := g.lib.DeviceSetGpuLockedClocks(g.handle, 0, uint32(mhz)); ret != SUCCESS {
 		return fmt.Errorf(g.lib.StringFromReturn(ret))
+	}
+	return nil
+}
+
+func (g *Device) ResetFanSpeed() error {
+	if g.lib.DeviceGetNumFans == nil || g.lib.DeviceSetDefaultFanSpeed_v2 == nil {
+		return errors.New("fan control not supported by this driver version")
+	}
+	var count uint32
+	if ret := g.lib.DeviceGetNumFans(g.handle, &count); ret != SUCCESS {
+		return fmt.Errorf(g.lib.StringFromReturn(ret))
+	}
+	if count == 0 {
+		return errors.New("no fans detected")
+	}
+	for i := uint32(0); i < count; i++ {
+		if ret := g.lib.DeviceSetDefaultFanSpeed_v2(g.handle, i); ret != SUCCESS {
+			return fmt.Errorf("fan %d: %s", i, g.lib.StringFromReturn(ret))
+		}
 	}
 	return nil
 }

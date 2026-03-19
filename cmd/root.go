@@ -2,15 +2,16 @@ package cmd
 
 import (
 	"fmt"
-
-	"github.com/zhhc99/gpuctl/internal/gpu"
-	"github.com/zhhc99/gpuctl/internal/nvml"
+	"sort"
 
 	"github.com/spf13/cobra"
+	"github.com/zhhc99/gpuctl/internal/gpu"
+	"github.com/zhhc99/gpuctl/internal/nvml"
 )
 
 var (
-	deviceFlag []string
+	deviceIndices []int
+	allDevices    bool
 
 	Backend gpu.Backend
 	Devices []gpu.Device
@@ -26,21 +27,20 @@ var rootCmd = &cobra.Command{
 		var err error
 		Backend, err = nvml.NewBackend()
 		if err != nil {
-			// Don't fail immediately if NVML lib is missing,
-			// but marked as nil so commands can handle it.
-			// 我不理解.
+			// NVML not available; commands that don't need GPU still work.
 			return nil
 		}
-
 		if err := Backend.Init(); err != nil {
 			return fmt.Errorf("nvml init failed: %w", err)
 		}
-
-		Devices, err = Backend.GPUs()
+		devs, err := Backend.GPUs()
 		if err != nil {
 			return fmt.Errorf("failed to list gpus: %w", err)
 		}
-
+		sort.Slice(devs, func(i, j int) bool {
+			return devs[i].PCIBusID() < devs[j].PCIBusID()
+		})
+		Devices = devs
 		return nil
 	},
 	PersistentPostRun: func(cmd *cobra.Command, args []string) {
@@ -55,5 +55,16 @@ func Execute() error {
 }
 
 func init() {
-	rootCmd.PersistentFlags().StringSliceVarP(&deviceFlag, "device", "d", nil, "device selection")
+	cobra.EnableCommandSorting = false
+	rootCmd.SetHelpCommand(&cobra.Command{Hidden: true})
+
+	rootCmd.AddCommand(listCmd)
+	rootCmd.AddCommand(tuneCmd)
+	rootCmd.AddCommand(confCmd)
+	rootCmd.AddCommand(loadCmd)
+	rootCmd.AddCommand(healthCmd)
+	rootCmd.AddCommand(installCmd)
+	rootCmd.AddCommand(uninstallCmd)
+	rootCmd.AddCommand(versionCmd)
+	rootCmd.AddCommand(daemonCmd)
 }

@@ -5,7 +5,7 @@ const Unavailable int = -0x7FFFFFFF
 type Snapshot struct {
 	Index int
 	Name  string
-	UUID  string
+	BusID string
 
 	UtilizationGPU int
 	UtilizationMem int
@@ -42,8 +42,8 @@ func (d *Snapshot) Capture(dev Device) {
 	if d.Name == "" {
 		d.Name = dev.Name()
 	}
-	if d.UUID == "" {
-		d.UUID = dev.UUID()
+	if d.BusID == "" {
+		d.BusID = dev.PCIBusID()
 	}
 	d.UtilizationGPU, d.UtilizationMem, _ = dev.Utilization()
 	d.ClockGpu, d.ClockMem, _ = dev.Clocks()

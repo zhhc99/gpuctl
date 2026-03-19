@@ -7,7 +7,7 @@
 
 ![gpuctl image](./docs/images/demo.png)
 
-<!-- https://ray.so/#code=JCBncHVjdGwgbGlzdApJRCAgICAgTkFNRSAgICAgICAgICAgICAgICAgICAgICAgICBVVUlEICAgICAgICBCQUNLRU5ECm46MCAgICBOVklESUEgR2VGb3JjZSBSVFggNDA2MCAgICAgIEdQVS0wMTIzLi4gIE5WTUwKaTowICAgIEludGVsIEFyYyBQcm8gQjUwICAgICAgICAgICAgR1BVLTQ1NjcuLiAgTGV2ZWxaZXJvCgokIGdwdWN0bCBnZXQgLS1kZXZpY2UgbjowLGk6MApJRCAgICAgTkFNRSAgICAgICAgICAgICBURU1QICAgRkFOICAgICAgICAgICBQT1dFUiAgICBVVElMICAgICAgICAgQ0xPQ0sgICAgICAgICBNRU1PUlkKbjowICAgIFJUWCA0MDYwICAgICAgICAgNDjCsEMgICAzNyUvMTc5MnJwbSAgIDUyVyAgICAgIEc6MCUgTTo0OCUgICBHOjIxMCBNOjQwNSAgIDIuMC84LjIgR0IKaTowICAgIEFyYyBQcm8gQjUwICAgICAgNDLCsEMgICAzMCUvMTAyN3JwbSAgIDI4VyAgICAgIEc6MCUgTToxMiUgICBHOjI0MCBNOjIxMCAgIDAuNS8xNi4wIEdCCgokIGdwdWN0bCB0dW5lIHNldCBwbD0xMDUgY29ncHU9MTgwIC1kIG46MApEZXZpY2UgbjowIChOVklESUEgR2VGb3JjZSBSVFggNDA2MCk6CiAgW-KclF0gY2xvY2tfb2Zmc2V0X2dwdT0xODAKICBb4pyUXSBwb3dlcl9saW1pdD0xMDUK&language=shell&padding=16&background=false&darkMode=true -->
+<!-- https://ray.so/#code=JCBncHVjdGwgbGlzdApJRCAgIE5BTUUgICAgICAgVEVNUCAgIEZBTiAgICAgICAgICAgUE9XRVIgICBVVElMICAgICAgICAgQ0xPQ0sgICAgICAgICAgICBNRU1PUlkKMCAgICBSVFggNTA2MCAgIDU5wrBDICAgNDMlLzIxMTVycG0gICA0OFcgICAgIEc6NDUlIE06NiUgICBHOjI0NDUgTToxNTAwMSAgIDUuMy84LjBHQgoxICAgIFJUWCA0MDYwICAgNDjCsEMgICAzNyUvMTc5MnJwbSAgIDUyVyAgICAgRzo1NiUgTToyOCUgIEc6MTgxNSBNOjIxMCAgICAgMC41LzE2LjBHQgoKCiQgc3VkbyBncHVjdGwgbG9hZApBcHBseWluZyBjb25maWcgdG8gRGV2aWNlIDAgKE5WSURJQSBHZUZvcmNlIFJUWCA1MDYwKS4uLgogIFvinJRdIFBvd2VyTGltaXQgKDEyM1cpCiAgW-KclF0gQ2xvY2tPZmZzZXRHUFUgKDI0ME1IeikKICBb4pyUXSBDbG9ja09mZnNldE1lbSAoMjAwME1IeikKICBb4pyUXSBDbG9ja0xpbWl0R1BVICgyNDYwTUh6KQogIFvinJRdIEZhbkN1cnZlICg0IHBvaW50cykg4oCUIG1hbmFnZWQgYnkgZGFlbW9uLgpEYWVtb24gbm90aWZpZWQuCg&language=shell&padding=16&background=false&darkMode=true&width=null&lineNumbers=false -->
 
 **GPU 状态管理和监控工具.**
 
@@ -15,76 +15,69 @@
 
 - [x] 查看功耗, 温度, 风扇, 频率, 内存状态
 - [x] 调整功耗, 频率
-- [ ] 调整风扇
+- [x] 调整风扇 (支持风扇曲线)
 - [x] 配置文件, 支持登录时自动应用
 
 支持的 GPU:
 
 - [x] NVIDIA (NVML)
-- [ ] Intel (Level Zero).
+- [ ] Intel (Level Zero)
 - [ ] 不会有 AMD, 直到有跨平台的 API (to AMD: Intel 比你们起步晚, 但 API 仍然跨平台)
 
 ## 📦 快速安装
 
-- Linux
+- **安装脚本 (Linux)**
 
   ```bash
   curl -sSL https://raw.githubusercontent.com/zhhc99/gpuctl/main/install.sh | sudo bash
   ```
 
-- Windows
+- **安装脚本 (Windows)**
 
   ```powershell
   powershell -ExecutionPolicy ByPass -Command "iwr -useb https://raw.githubusercontent.com/zhhc99/gpuctl/main/install.ps1 | iex"
   ```
 
-- 也可以用 `go install`:
+- **`go install` (需要安装 go):**
 
   ```bash
-  # 💡 gpuctl service install 在 Linux 下会自动向 /usr/local/bin/ 拷贝自身, 以避免服务权限问题.
   go install github.com/zhhc99/gpuctl@latest
+  cd $GOPATH/bin # cmd: cd %GOPATH%\bin; pwsh: cd $env:GOPATH\bin
+  gpuctl install
   ```
 
-**卸载:**
+- **手动安装:**
+  - 在 [releases](https://github.com/zhhc99/gpuctl/releases) 获取可执行文件, 然后执行 `gpuctl install` 即可.
 
-- Linux
+- **卸载:**
 
   ```bash
-  curl -sSL https://raw.githubusercontent.com/zhhc99/gpuctl/main/uninstall.sh | sudo bash
+  gpuctl uninstall
   ```
 
-- Windows
-  - 删除文件.
-  - 执行 `taskschd.msc` (任务计划程序), 删除所有前缀为 "gpuctl@" 的任务 (如果有).
+## 📖 常用命令
 
-## 📖 基础用法
-
-**查看所有 GPU 状态:**
+**检视**所有 GPU 状态:
 
 ```bash
-gpuctl get
-
-# on UNIX: watch -n 1 gpuctl get
+$ gpuctl list
+ID   NAME                      TEMP   FAN           POWER   UTIL         CLOCK            MEMORY
+0    NVIDIA GeForce RTX 5060   59°C   42%/2100rpm   47W     G:49% M:6%   G:2445 M:15001   5.5/8.0GB
 ```
 
-**设置 100w 功耗墙, 只应用到编号为 0 的 NVIDIA GPU:**
+临时调整功耗墙为 130w 并**超频** +200MHz, 锁定频率不超过 2650MHz 以实现**降压**:
 
-```bash
-gpuctl tune set pl=100 -d n:0
 ```
-
-**核心超频 +210MHz, 降压使得核心频率不超过 2520MHz:**
-
-```bash
-gpuctl tune set cogpu=210 clgpu=2520
+sudo gpuctl tune set pl=130 cogpu=200 clgpu=2650
 ```
 
 > ⚠️ 一般**不认为**超频损伤硬件, 但**激进**参数可能导致**花屏**或**冻结**.
 
-**编辑配置文件:**
+持久化配置文件, 每次开机都应用:
 
 ```bash
-gpuctl config edit
+gpuctl conf edit
+sudo gpuctl load
 ```
 
 更多用法见 `gpuctl --help`.
@@ -97,10 +90,6 @@ A: `tune` 和 `service` 的一些命令需要提权:
 
 - **Linux**: 使用 `sudo` 执行即可.
 - **Windows**: 不太容易在同一个终端提权, 用 `sudo` 的话当前终端可能看不到输出. 考虑给 Windows Terminal 添加一个新配置文件, 并启用 "以管理员身份运行此配置文件", 之后可以在这个提权终端执行 `gpuctl`.
-
-**Q: Windows 下 `gpuctl service status` 显示乱码怎么办?**
-
-A: 这是 Windows 地区编码的遗留问题. 如果能看到乱码, 一般说明服务正常运行.
 
 ## 🔨 编译源代码
 

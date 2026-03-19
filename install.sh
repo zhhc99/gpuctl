@@ -1,63 +1,29 @@
 #!/usr/bin/env bash
-#
-# 安装 gpuctl 到 /usr/local/bin
-
 {
 set -euo pipefail
 
-GPUCTL_TMP_DIR=""
+err() { echo "Error: $*" >&2; exit 1; }
 
-err() {
-  echo "❗ Error: $*" >&2
-  exit 1
-}
+REPO="zhhc99/gpuctl"
+OS=$(uname -s | tr '[:upper:]' '[:lower:]')
+ARCH=$(uname -m)
 
-cleanup() {
-  if [[ -n "${GPUCTL_TMP_DIR:-}" ]]; then
-    rm -rf "${GPUCTL_TMP_DIR}"
-  fi
-}
-trap cleanup EXIT
+[[ $EUID -eq 0 ]] || err "please run with sudo"
 
-main() {
-  if [[ $EUID -ne 0 ]]; then
-    echo "🛡️ Need sudo powers to install..."
-	echo "⚠️ Please retry and run with sudo."
-	exit 1
-  fi
+[[ "$OS" == "linux" ]] || err "unsupported OS: $OS"
+case "$ARCH" in
+  x86_64)        ARCH="x86_64" ;;
+  aarch64|arm64) ARCH="arm64" ;;
+  *)             err "unsupported architecture: $ARCH" ;;
+esac
 
-  # os & arch check
-  local os arch
-  os=$(uname -s | tr '[:upper:]' '[:lower:]')
-  arch=$(uname -m)
+URL="https://github.com/$REPO/releases/latest/download/gpuctl_Linux_${ARCH}.tar.gz"
+TMP=$(mktemp -d)
+trap 'rm -rf "$TMP"' EXIT
 
-  [[ "${os}" == "linux" ]] || err "unsupported os: ${os}"
+echo "Downloading gpuctl for Linux_${ARCH}..."
+curl -sSL "$URL" | tar -xz -C "$TMP"
 
-  case "${arch}" in
-    x86_64) arch="x86_64" ;;
-    aarch64|arm64) arch="arm64" ;;
-    *) err "unsupported architecture: ${arch}" ;;
-  esac
-
-  # find url for latest release
-  local platform="Linux_${arch}"
-  local repo="zhhc99/gpuctl"
-  local url="https://github.com/${repo}/releases/latest/download/gpuctl_${platform}.tar.gz"
-
-  # download and install
-  GPUCTL_TMP_DIR=$(mktemp -d)
-  echo "🚀 Downloading gpuctl for ${platform}..."
-
-  trap 'rm -rf "${GPUCTL_TMP_DIR}"' EXIT
-  if ! curl -sSL "${url}" | tar -xz -C "${GPUCTL_TMP_DIR}"; then
-    err "failed to download. something must be wrong here... 🤔"
-  fi
-
-  echo "⚙️ Installing to /usr/local/bin..."
-  sudo install -m 755 "${GPUCTL_TMP_DIR}/gpuctl" /usr/local/bin/gpuctl
-
-  echo "🎉 Done. Try run 'gpuctl'!"
-}
-
-main "$@"
+echo "Installing..."
+sudo "$TMP/gpuctl" install
 }

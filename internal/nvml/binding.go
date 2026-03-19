@@ -27,7 +27,7 @@ type NvmlLib struct {
 	DeviceGetCount_v2         func(count *uint32) Return
 	DeviceGetHandleByIndex_v2 func(index uint32, device *DeviceHandle) Return
 	DeviceGetIndex            func(device DeviceHandle, index *uint32) Return
-	DeviceGetUUID             func(device DeviceHandle, buffer *byte, length uint32) Return // NVML_DEVICE_UUID_BUFFER_SIZE=80
+	DeviceGetPciInfo_v3       func(device DeviceHandle, pci *PciInfo) Return
 	DeviceGetName             func(device DeviceHandle, buffer *byte, length uint32) Return // NVML_DEVICE_NAME_BUFFER_SIZE=64
 
 	// monitor
@@ -65,6 +65,11 @@ type NvmlLib struct {
 	DeviceGetSupportedGraphicsClocks func(device DeviceHandle, memoryClockMHz uint32, count *uint32, clocksMHz *uint32) Return
 	DeviceSetGpuLockedClocks         func(device DeviceHandle, min uint32, max uint32) Return
 	DeviceResetGpuLockedClocks       func(device DeviceHandle) Return
+
+	// fan control
+	DeviceGetNumFans            func(device DeviceHandle, numFans *uint32) Return
+	DeviceSetFanSpeed_v2        func(device DeviceHandle, fan uint32, speed uint32) Return
+	DeviceSetDefaultFanSpeed_v2 func(device DeviceHandle, fan uint32) Return
 }
 
 func NewNvmlLib() (*NvmlLib, error) {
@@ -85,7 +90,7 @@ func NewNvmlLib() (*NvmlLib, error) {
 	libloader.Bind(lib, &nvml.DeviceGetCount_v2, "nvmlDeviceGetCount_v2")
 	libloader.Bind(lib, &nvml.DeviceGetHandleByIndex_v2, "nvmlDeviceGetHandleByIndex_v2")
 	libloader.Bind(lib, &nvml.DeviceGetIndex, "nvmlDeviceGetIndex")
-	libloader.Bind(lib, &nvml.DeviceGetUUID, "nvmlDeviceGetUUID")
+	libloader.Bind(lib, &nvml.DeviceGetPciInfo_v3, "nvmlDeviceGetPciInfo_v3")
 	libloader.Bind(lib, &nvml.DeviceGetName, "nvmlDeviceGetName")
 
 	libloader.Bind(lib, &nvml.DeviceGetUtilizationRates, "nvmlDeviceGetUtilizationRates")
@@ -119,6 +124,10 @@ func NewNvmlLib() (*NvmlLib, error) {
 	libloader.Bind(lib, &nvml.DeviceGetSupportedGraphicsClocks, "nvmlDeviceGetSupportedGraphicsClocks")
 	libloader.Bind(lib, &nvml.DeviceSetGpuLockedClocks, "nvmlDeviceSetGpuLockedClocks")
 	libloader.Bind(lib, &nvml.DeviceResetGpuLockedClocks, "nvmlDeviceResetGpuLockedClocks")
+
+	libloader.Bind(lib, &nvml.DeviceGetNumFans, "nvmlDeviceGetNumFans")
+	libloader.Bind(lib, &nvml.DeviceSetFanSpeed_v2, "nvmlDeviceSetFanSpeed_v2")
+	libloader.Bind(lib, &nvml.DeviceSetDefaultFanSpeed_v2, "nvmlDeviceSetDefaultFanSpeed_v2")
 
 	return nvml, nil
 }
