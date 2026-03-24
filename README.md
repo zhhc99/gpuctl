@@ -69,7 +69,7 @@ ID   NAME                      TEMP   FAN           POWER   UTIL         CLOCK  
 临时调整功耗墙为 130w 并**超频** +200MHz, 锁定频率不超过 2650MHz 以实现**降压**:
 
 ```
-sudo gpuctl tune set pl=130 cogpu=200 clgpu=2650
+gpuctl tune set pl=130 cogpu=200 clgpu=2650
 ```
 
 > ⚠️ 一般**不认为**超频损伤硬件, 但**激进**参数可能导致**花屏**或**冻结**.
@@ -78,7 +78,7 @@ sudo gpuctl tune set pl=130 cogpu=200 clgpu=2650
 
 ```bash
 gpuctl conf edit
-sudo gpuctl load
+gpuctl load
 ```
 
 更多用法见 `gpuctl --help`.
