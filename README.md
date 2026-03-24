@@ -102,7 +102,7 @@ CGO_ENABLED=0 go build -o gpuctl .
 如果希望带有版本号:
 
 ```bash
-CGO_ENABLED=0 go build -ldflags "-X 'github.com/zhhc99/gpuctl/cmd.Version=v1.0.0'"
+CGO_ENABLED=0 go build -ldflags "-X 'github.com/zhhc99/gpuctl/internal/cli.Version=v1.0.0'"
 ```
 
 ## 🚀 发布
