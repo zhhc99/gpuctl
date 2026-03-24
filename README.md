@@ -26,33 +26,34 @@
 
 ## 📦 快速安装
 
-- **安装脚本 (Linux)**
+执行脚本来安装和卸载.
+
+### 安装
+
+- **Linux:**
 
   ```bash
   curl -sSL https://raw.githubusercontent.com/zhhc99/gpuctl/main/install.sh | sudo bash
   ```
 
-- **安装脚本 (Windows)**
+- **Windows**
 
   ```powershell
   powershell -ExecutionPolicy ByPass -Command "iwr -useb https://raw.githubusercontent.com/zhhc99/gpuctl/main/install.ps1 | iex"
   ```
 
-- **`go install` (需要安装 go):**
+### 卸载
+
+- **Linux:**
 
   ```bash
-  go install github.com/zhhc99/gpuctl@latest
-  cd $GOPATH/bin # cmd: cd %GOPATH%\bin; pwsh: cd $env:GOPATH\bin
-  gpuctl install
+  curl -sSL https://raw.githubusercontent.com/zhhc99/gpuctl/main/uninstall.sh | sudo bash
   ```
 
-- **手动安装:**
-  - 在 [releases](https://github.com/zhhc99/gpuctl/releases) 获取可执行文件, 然后执行 `gpuctl install` 即可.
+- **Windows**
 
-- **卸载:**
-
-  ```bash
-  gpuctl uninstall
+  ```powershell
+  powershell -ExecutionPolicy ByPass -Command "iwr -useb https://raw.githubusercontent.com/zhhc99/gpuctl/main/uninstall.ps1 | iex"
   ```
 
 ## 📖 常用命令
@@ -84,12 +85,7 @@ sudo gpuctl load
 
 ## 🤔 常见问题
 
-**Q: 提示 `Permission Denied` 或 `Insufficient Permissions` 等怎么办?**
-
-A: `tune` 和 `service` 的一些命令需要提权:
-
-- **Linux**: 使用 `sudo` 执行即可.
-- **Windows**: 不太容易在同一个终端提权, 用 `sudo` 的话当前终端可能看不到输出. 考虑给 Windows Terminal 添加一个新配置文件, 并启用 "以管理员身份运行此配置文件", 之后可以在这个提权终端执行 `gpuctl`.
+暂无.
 
 ## 🔨 编译源代码
 
