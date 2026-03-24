@@ -2,7 +2,7 @@
   "help.root": "用法: gpuctl <命令> [参数]\n\n监控\n   list         显示 GPU 状态和指标\n\n调节 (临时, 重启后失效)\n   tune get     查看所有可调参数的范围和当前值\n   tune set     设置 GPU 参数\n   tune reset   将 GPU 参数重置为默认值\n\n配置\n   conf init    生成默认配置文件\n   conf edit    用编辑器打开配置文件\n   load         应用配置文件并重新加载服务\n\n服务\n   health       查看服务运行状态\n\n其他\n   version      显示版本信息\n\n运行 'gpuctl help <命令>' 查看命令的详细用法.",
   "help.list": "用法: gpuctl list [-a] [-d <序号,...>]\n\n显示所有 GPU 的状态和指标.\n\n选项:\n  -a, --all              选择所有设备 (默认)\n  -d, --device <序号>    设备编号, 逗号分隔 (如 -d 0,1)",
   "help.tune": "用法: gpuctl tune <get|set|reset> [选项]\n\n  tune get                    查看所有可调参数的范围和当前值\n  tune set 参数=值 ...        设置 GPU 参数\n  tune reset [参数...]        将参数重置为默认值\n\n支持的参数 (用于 set 和 reset):\n  pl    / power_limit         功耗限制 (W)\n  cogpu / clock_offset_gpu    GPU 频率偏移 (MHz)\n  comem / clock_offset_mem    显存频率偏移 (MHz)\n  clgpu / clock_limit_gpu     GPU 频率上限 (MHz)\n  fan                         风扇转速 (%)\n\n选项:\n  -a, --all              应用到所有设备\n  -d, --device <序号>    设备编号 (多卡时必须指定, 或用 -a)\n\n示例:\n  gpuctl tune get\n  gpuctl tune set pl=100 -d 0\n  gpuctl tune set cogpu=210 clgpu=2520 -a\n  gpuctl tune reset fan -d 0",
-  "help.conf": "用法: gpuctl conf <init|edit>\n\n  conf init    根据当前 GPU 生成默认配置文件\n  conf edit    用编辑器打开配置文件\n\n配置文件路径因平台而异, 运行 'gpuctl conf init' 可查看路径.",
+  "help.conf": "用法: gpuctl conf <init|edit>\n\n  conf init    根据当前 GPU 生成默认配置文件\n  conf edit    用编辑器打开配置文件\n\n配置文件路径因平台而异, 运行 'gpuctl conf init' 可生成配置模板.",
   "help.load": "用法: gpuctl load\n\n将配置文件应用到所有 GPU, 并重新加载正在运行的服务.\n如果还没有配置文件, 请先运行 'gpuctl conf init'.",
   "help.health": "用法: gpuctl health\n\n查看 gpuctl 服务是否已安装并正在运行.",
   "help.version": "用法: gpuctl version\n\n显示 gpuctl 版本.",
